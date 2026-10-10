@@ -152,12 +152,14 @@ router.post("/login", async (req: Request, res: Response) => {
       },
     });
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Something is wrong, please try again",
-      error: err,
-    });
-  }
+  console.error("Login error:", err);
+
+  return res.status(500).json({
+    success: false,
+    message: "Something is wrong, please try again",
+    error: err instanceof Error ? err.message : String(err),
+  });
+}
 });
 
 // POST /api/v3/users/logout
